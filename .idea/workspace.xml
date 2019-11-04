@@ -14,6 +14,7 @@
       <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/META-INF/MANIFEST.MF" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
@@ -1708,7 +1709,7 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="893" />
     <option name="y" value="68" />
     <option name="width" value="1128" />
@@ -2125,12 +2126,12 @@
       <workItem from="1572447397149" duration="1911000" />
       <workItem from="1572487123124" duration="1252000" />
       <workItem from="1572850684620" duration="15000" />
-      <workItem from="1572853996102" duration="1111000" />
+      <workItem from="1572853996102" duration="1683000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="520117000" />
+    <option name="totallyTimeSpent" value="520689000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -2142,8 +2143,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1066" extended-state="7" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
     <layout>
       <window_info id="Designer" order="0" />
       <window_info id="Image Layers" order="1" />
@@ -2154,7 +2154,7 @@
       <window_info content_ui="combo" id="Project" order="6" sideWeight="0.4978261" visible="true" weight="0.21344717" />
       <window_info id="Structure" order="7" sideWeight="0.5021739" side_tool="true" weight="0.20490928" />
       <window_info anchor="bottom" id="Spring" order="0" weight="0.32930845" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="1" visible="true" weight="0.44827586" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="1" visible="true" weight="0.58081895" />
       <window_info anchor="bottom" id="Docker" order="2" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="3" sideWeight="0.50053364" side_tool="true" weight="0.28152174" />
       <window_info anchor="bottom" id="Messages" order="4" sideWeight="0.49949136" weight="0.5516129" />
