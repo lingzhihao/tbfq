@@ -1,0 +1,53 @@
+﻿<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/mvc
+    http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <import resource="spring-biz.xml"/>
+
+    <context:component-scan base-package="com.ling.ssm.controller"/>
+    <!--MVC 注解-->
+    <mvc:annotation-driven/>
+
+    <!--交给Servlet处理-->
+    <mvc:default-servlet-handler/>
+
+    <!--配置图片文件解析器，及一些参数-->
+    <bean id="multipartResolver"  class="org.springframework.web.multipart.commons.CommonsMultipartResolver" >
+        <property name="defaultEncoding" value="utf-8"/>
+        <!--最大内存大小-->
+        <property name="maxUploadSize" value="104857600"/>
+        <!--最小内存大小-->
+        <property name="maxInMemorySize" value="40960"/>
+    </bean>
+
+    <!--视图转换器-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <!--第一个属性， view-->
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <!--前缀后缀-->
+        <property name="prefix" value="/WEB-INF/pages/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/houtai/**"/>
+            <!--配置后台登录的拦截器-->
+            <bean class="com.ling.ssm.global.LoginInterceptor"/>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/ling/order"/>
+            <!--配置前台登录的拦截器-->
+            <bean class="com.ling.ssm.global.UserLoginInterceptor"/>
+        </mvc:interceptor>
+
+    </mvc:interceptors>
+
+</beans>

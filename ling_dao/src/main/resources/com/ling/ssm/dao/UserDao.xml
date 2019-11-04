@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//myDepartmentDao.xmlbatis.org//DTD Mapper 3.4//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ling.ssm.dao.UserDao">
+
+    <resultMap id="user" type="User">
+        <!--基本属性-->
+        <id property="uName" column="u_name" javaType="String"/>
+        <result property="uRelname" column="u_relname" javaType="String"/>
+        <result property="uPhone" column="u_phone" javaType="String"/>
+        <result property="uPassword" column="u_password" javaType="String"/>
+        <result property="uSex" column="u_sex" javaType="String"/>
+        <result property="uAddress" column="u_address" javaType="String"/>
+        <result property="uEmail" column="u_email" javaType="String"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="User" keyProperty="u_name">
+        insert into user values (#{uName},#{uRelname},#{uPhone},#{uPassword},#{uSex},#{uAddress},#{uEmail})
+    </insert>
+
+    <update id="update" parameterType="User">
+        update `user` set  u_relname = #{uRelname},u_phone = #{uPhone},u_password = #{uPassword},u_sex = #{uSex},u_address = #{uAddress},u_email = #{uEmail} where u_name = #{uName}
+    </update>
+
+    <update id="updateByUname" parameterType="User">
+        update `user` set  u_password = #{uPassword} where u_name = #{uName} and u_Phone = #{uPhone}
+    </update>
+
+
+
+    <select id="select" parameterType="String" resultMap="user">
+        select * from user where u_name = #{uName}
+    </select>
+
+    <select id="selectByName" parameterType="java.lang.Integer">
+        select count(*) from user where u_name = #{uName}
+    </select>
+
+    <delete id="delete" parameterType="String">
+        delete from user where u_name = #{uName}
+    </delete>
+
+
+</mapper>

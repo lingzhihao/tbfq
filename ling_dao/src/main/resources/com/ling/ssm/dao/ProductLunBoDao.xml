@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//myDepartmentDao.xmlbatis.org//DTD Mapper 3.4//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ling.ssm.dao.ProductLunBoDao">
+
+    <resultMap id="productLunBo" type="ProductLunBo">
+        <!--基本属性-->
+        <id property="lLno" column="l_lno" javaType="int"/>
+        <result property="lName" column="l_name" javaType="String"/>
+        <result property="lImage1" column="l_img1" javaType="String"/>
+        <result property="lImage2" column="l_img2" javaType="String"/>
+        <result property="lImage3" column="l_img3" javaType="String"/>
+        <result property="lImage4" column="l_img4" javaType="String"/>
+        <result property="lImage5" column="l_img5" javaType="String"/>
+    </resultMap>
+
+    <!--
+        useGeneratedKeys="true" 打开自动生成
+        keyProperty="id" 指定自动生成的主键
+        -->
+    <insert id="insert" parameterType="ProductLunBo" keyProperty="l_lno">
+        insert into product_lunbo(l_name,l_img1,l_img2,l_img3,l_img4,l_img5) values (#{lName},#{lImage1},#{lImage2},#{lImage3},#{lImage4},#{lImage5})
+    </insert>
+
+    <update id="update" parameterType="ProductLunBo">
+        update product_lunbo set
+        <if test="lName !=null">l_name = #{lName}</if>
+        <if test="lImage1 != null">,l_img1 = #{lImage1}</if>
+        <if test="lImage2 != null">,l_img2 = #{lImage2}</if>
+        <if test="lImage3 != null">,l_img3 = #{lImage3}</if>
+        <if test="lImage4 != null">,l_img4 = #{lImage4}</if>
+        <if test="lImage5 != null">,l_img5 = #{lImage5}</if>
+        where  l_lno = #{lLno}
+    </update>
+
+    <select id="select" parameterType="Integer" resultMap="productLunBo">
+        select * from product_lunbo where l_lno = #{lLno}
+    </select>
+    
+    <select id="selectAll" resultMap="productLunBo">
+        select * from product_lunbo
+    </select>
+
+    <delete id="delete" parameterType="Integer">
+        delete from product_lunbo where l_lno = #{lLno}
+    </delete>
+
+
+</mapper>

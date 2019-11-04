@@ -1,0 +1,36 @@
+﻿<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--开启自动扫描-->
+    <context:component-scan base-package="com.ling.ssm.dao"/>
+
+    <!--配置数据源-->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://106.15.249.38:3306/ling?useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=GMT"/>
+        <property name="username" value="root"/>
+        <property name="password" value="root"/>
+    </bean>
+
+    <!--Session工厂-->
+    <bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--配置一个 数据源 属性-->
+        <property name="dataSource" ref="dataSource"/>
+        <!--配置 别名-->
+        <property name="typeAliasesPackage" value="com.ling.ssm.entity"/>
+    </bean>
+
+    <!--配置映射器接口-->
+    <!--实现Mybatis 的 自动映射-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="sessionFactory"/>
+        <!-- 指定一个包， 包里放持久化接口和映射文件，会把包里所有接口整合起来，实现所有接口-->
+        <property name="basePackage" value="com.ling.ssm.dao"/>
+    </bean>
+
+</beans>

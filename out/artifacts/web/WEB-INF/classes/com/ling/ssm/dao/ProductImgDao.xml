@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//myDepartmentDao.xmlbatis.org//DTD Mapper 3.4//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ling.ssm.dao.ProductImgDao">
+
+    <resultMap id="productImg" type="ProductImg">
+        <!--基本属性-->
+        <id property="gGno" column="g_gno" javaType="int"/>
+        <result property="gName" column="g_name" javaType="String"/>
+        <result property="gImage1" column="g_img1" javaType="String"/>
+        <result property="gImage2" column="g_img2" javaType="String"/>
+        <result property="gImage3" column="g_img3" javaType="String"/>
+        <result property="gImage4" column="g_img4" javaType="String"/>
+        <result property="gImage5" column="g_img5" javaType="String"/>
+    </resultMap>
+
+    <!--
+        useGeneratedKeys="true" 打开自动生成
+        keyProperty="id" 指定自动生成的主键
+        -->
+    <insert id="insert" parameterType="ProductImg" keyProperty="g_gon">
+        insert into product_img(g_name,g_img1,g_img2,g_img3,g_img4,g_img5) values (#{gName},#{gImage1},#{gImage2},#{gImage3},#{gImage4},#{gImage5})
+    </insert>
+
+    <update id="update" parameterType="ProductImg">
+        update product_img set g_name = #{gName}
+        <if test="gImage1 != null">,g_img1 = #{gImage1}</if>
+        <if test="gImage2 != null">,g_img2 = #{gImage2}</if>
+        <if test="gImage3 != null">,g_img3 = #{gImage3}</if>
+        <if test="gImage4 != null">,g_img4 = #{gImage4}</if>
+        <if test="gImage5 != null">,g_img5 = #{gImage5}</if>
+        where g_gno = #{gGno}
+    </update>
+
+    <select id="select" parameterType="Integer" resultMap="productImg">
+        select * from product_img where g_gno = #{gGno}
+    </select>
+    
+    <select id="selectAll" resultMap="productImg">
+        select * from product_img
+    </select>
+
+    <delete id="delete" parameterType="Integer">
+        delete from product_img where g_gno = #{gGno}
+    </delete>
+
+
+</mapper>

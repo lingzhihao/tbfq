@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//myDepartmentDao.xmlbatis.org//DTD Mapper 3.4//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ling.ssm.dao.ProductDao">
+
+    <resultMap id="product" type="Product">
+        <!--基本属性-->
+        <id property="pId" column="p_id" javaType="String"/>
+        <result property="pPrice" column="p_price" javaType="String"/>
+        <result property="pName" column="p_name" javaType="String"/>
+        <result property="pImg" column="p_img" javaType="String"/>
+        <result property="pNj" column="p_nj" javaType="String"/>
+        <result property="pWj" column="p_wj" javaType="String"/>
+        <result property="pPssl" column="p_pssl" javaType="String"/>
+        <result property="pDp" column="p_dp" javaType="String"/>
+        <result property="pFwry" column="p_fwry" javaType="String"/>
+        <result property="pFwsj" column="p_fwsj" javaType="String"/>
+        <result property="pZxts" column="p_zxts" javaType="String"/>
+        <result property="pHzyp" column="p_hzyp" javaType="String"/>
+        <result property="pPsdj" column="p_psdj" javaType="String"/>
+        <result property="pXc" column="p_xc" javaType="String"/>
+        <result property="pXk" column="p_xk" javaType="String"/>
+        <result property="pBt" column="p_bt" javaType="String"/>
+        <result property="pZj" column="p_zj" javaType="String"/>
+        <result property="pZssp" column="p_zssp" javaType="String"/>
+        <result property="productImgGno" column="product_img_gno" javaType="int"/>
+        <result property="productLunBoLno" column="product_lunbo_lno" javaType="int"/>
+        <!--如果是外键的话，须使用-->
+        <association property="productImg" column="g_gno" javaType="ProductImg">
+            <id property="gGno" column="g_gno" javaType="int"/>
+            <result property="gName" column="g_name" javaType="String"/>
+            <result property="gImage1" column="g_img1" javaType="String"/>
+            <result property="gImage2" column="g_img2" javaType="String"/>
+            <result property="gImage3" column="g_img3" javaType="String"/>
+            <result property="gImage4" column="g_img4" javaType="String"/>
+            <result property="gImage5" column="g_img5" javaType="String"/>
+        </association> <!--如果是外键的话，须使用-->
+        <association property="productLunBo" column="l_lno" javaType="ProductLunBo">
+            <id property="lLno" column="l_lno" javaType="int"/>
+            <result property="lName" column="l_name" javaType="String"/>
+            <result property="lImage1" column="l_img1" javaType="String"/>
+            <result property="lImage2" column="l_img2" javaType="String"/>
+            <result property="lImage3" column="l_img3" javaType="String"/>
+            <result property="lImage4" column="l_img4" javaType="String"/>
+            <result property="lImage5" column="l_img5" javaType="String"/>
+        </association>
+    </resultMap>
+
+    <insert id="insert" parameterType="Product" keyProperty="p_id">
+        insert into product values (#{pId},#{pPrice},#{pName},#{pImg},#{pNj},#{pWj},#{pPssl},#{pDp},
+        #{pFwry},#{pFwsj},#{pZxts},#{pHzyp},#{pPsdj},#{pXc},
+        #{pXk},#{pBt},#{pZj},#{pZssp},#{productImgGno},#{productLunBoLno})
+    </insert>
+
+    <update id="update" parameterType="Product">
+        update product set  p_price = #{pPrice},
+        <if test="pName != null">p_name = #{pName},</if>
+        <if test="pImg != null">p_img = #{pImg},</if>
+        <if test="pNj != null">p_nj = #{pNj},</if>
+        <if test="pWj != null">p_wj = #{pWj},</if>
+        <if test="pPssl != null">p_pssl = #{pPssl},</if>
+        <if test="pDp != null">p_dp = #{pDp},</if>
+        <if test="pFwry != null">p_fwry = #{pFwry},</if>
+        <if test="pFwsj != null">p_fwsj = #{pFwsj},</if>
+        <if test="pZxts != null">p_zxts = #{pZxts},</if>
+        <if test="pHzyp != null">p_hzyp = #{pHzyp},</if>
+        <if test="pPsdj != null">p_psdj = #{pPsdj},</if>
+        <if test="pXc != null">p_xc = #{pXc},</if>
+        <if test="pXk != null">p_xk = #{pXk},</if>
+        <if test="pBt != null">p_bt = #{pBt},</if>
+        <if test="pZj != null">p_zj = #{pZj},</if>
+        <if test="pZssp != null">p_zssp = #{pZssp},</if>
+        <if test="productImgGno != null">product_img_gno = #{productImgGno},</if>
+        <if test="productLunBoLno != null">product_lunbo_lno = #{productLunBoLno}</if>
+        where p_id = #{pId}
+    </update>
+
+    <!--使用连接查询，查询出外键表的信息-->
+    <select id="select" parameterType="String" resultMap="product">
+        select p.*,
+        i.g_gno,i.g_name,i.g_img1,i.g_img2,i.g_img3,i.g_img4,i.g_img5,
+        b.l_lno,b.l_name,b.l_img1,b.l_img2,b.l_img3,b.l_img4,b.l_img5
+        from product p left join product_img i on i.g_gno = p.product_img_gno
+        left join product_lunbo b on b.l_lno = p.product_lunbo_lno
+        where p.p_id = #{pId}
+    </select>
+    
+    <select id="selectAll" resultMap="product">
+        select p_id,p_price,p_name,p_img from product
+    </select>
+
+    <delete id="delete" parameterType="String">
+        delete from product where p_id = #{pId}
+    </delete>
+
+
+</mapper>

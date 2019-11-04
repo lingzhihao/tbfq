@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//myDepartmentDao.xmlbatis.org//DTD Mapper 3.4//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ling.ssm.dao.PhotographerDao">
+
+    <resultMap id="photographer" type="Photographer">
+        <!--基本属性-->
+        <id property="sSno" column="s_sno" javaType="String"/>
+        <result property="sName" column="s_name" javaType="String"/>
+        <result property="sSex" column="s_sex" javaType="String"/>
+        <result property="sAge" column="s_age" javaType="String"/>
+        <result property="sPhone" column="s_phone" javaType="String"/>
+    </resultMap>
+
+    <!--
+        useGeneratedKeys="true" 打开自动生成
+        keyProperty="id" 指定自动生成的主键
+        -->
+    <insert id="insert" parameterType="Photographer" keyProperty="s_sno">
+        insert into photographer values (#{sSno},#{sName},#{sSex},#{sAge},#{sPhone})
+    </insert>
+
+    <update id="update" parameterType="Photographer">
+        update photographer set  s_name = #{sName},s_sex = #{sSex},s_age = #{sAge},s_phone = #{sPhone} where s_sno = #{sSno}
+    </update>
+    
+    <select id="select" parameterType="String" resultMap="photographer">
+        select * from photographer where s_sno = #{sSno}
+    </select>
+    
+    <select id="selectAll" resultMap="photographer">
+        select * from photographer
+    </select>
+
+    <delete id="delete" parameterType="String">
+        delete from photographer where s_sno = #{sSno}
+    </delete>
+
+
+</mapper>

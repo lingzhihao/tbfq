@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//myDepartmentDao.xmlbatis.org//DTD Mapper 3.4//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ling.ssm.dao.EmployeeDao">
+
+    <resultMap id="employee" type="Employee">
+        <!--基本属性-->
+        <id property="eno" column="eno" javaType="String"/>
+        <result property="eName" column="e_name" javaType="String"/>
+        <result property="eSex" column="e_sex" javaType="String"/>
+        <result property="eAge" column="e_age" javaType="String"/>
+        <result property="ePassword" column="e_password" javaType="String"/>
+        <result property="eAddress" column="e_address" javaType="String"/>
+        <result property="ePhone" column="e_phone" javaType="String"/>
+        <!--如果是外键的话，须使用-->
+<!--        <association property="photographer" column="photographer_sSno" javaType="Photographer">-->
+<!--            <id property="sSno" column="s_sno" javaType="String"/>-->
+<!--            <result property="sName" column="s_name" javaType="String"/>-->
+<!--        </association>-->
+    </resultMap>
+
+    <!--
+        useGeneratedKeys="true" 打开自动生成
+        keyProperty="id" 指定自动生成的主键
+        -->
+    <insert id="insert" parameterType="Employee" keyProperty="s_sno">
+        insert into employee values (#{eno},#{eName},#{eSex},#{eAge},#{ePassword},#{eAddress},#{ePhone})
+    </insert>
+
+    <update id="update" parameterType="Employee">
+        update employee set  e_name = #{eName},e_sex = #{eSex},e_age = #{eAge},e_password = #{ePassword},e_address = #{eAddress},e_phone = #{ePhone} where eno = #{eno}
+    </update>
+
+    <select id="select" parameterType="String" resultMap="employee">
+        select * from employee where eno = #{eno}
+    </select>
+    
+    <select id="selectAll" resultMap="employee">
+        select * from employee
+    </select>
+
+    <delete id="delete" parameterType="String">
+        delete from employee where eno = #{eno}
+    </delete>
+
+
+</mapper>

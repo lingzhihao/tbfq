@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//myDepartmentDao.xmlbatis.org//DTD Mapper 3.4//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ling.ssm.dao.BookingDao">
+
+    <resultMap id="booking" type="Booking">
+        <!--基本属性-->
+        <id property="bYno" column="b_yno" javaType="Integer"/>
+        <result property="uName" column="u_name" javaType="String"/>
+        <result property="pId" column="p_id" javaType="String"/>
+        <result property="bMname" column="b_mname" javaType="String"/>
+        <result property="bWname" column="b_wname" javaType="String"/>
+        <result property="bDate" column="b_date" javaType="java.util.Date"/>
+        <result property="bPhone" column="b_phone" javaType="String"/>
+        <result property="bYduty" column="b_yduty" javaType="String"/>
+        <result property="eno" column="eno" javaType="String"/>
+        <!--管理员表-->
+        <association property="employee" column="eno" javaType="Employee">
+            <id property="eno" column="eno" javaType="String"/>
+            <result property="eName" column="e_name" javaType="String"/>
+        </association>
+        <!--套餐表-->
+        <association property="product" column="p_id" javaType="Product">
+            <id property="pId" column="p_id" javaType="String"/>
+            <result property="pPrice" column="p_price" javaType="String"/>
+            <result property="pName" column="p_name" javaType="String"/>
+            <result property="pImg" column="p_img" javaType="String"/>
+            <result property="pNj" column="p_nj" javaType="String"/>
+            <result property="pWj" column="p_wj" javaType="String"/>
+        </association>
+        <!--用户表-->
+        <association property="user" column="u_name" javaType="User">
+            <id property="uName" column="u_name" javaType="String"/>
+            <result property="uPhone" column="u_phone" javaType="String"/>
+            <result property="uAddress" column="u_address" javaType="String"/>
+        </association>
+    </resultMap>
+
+    <insert id="insert" parameterType="Booking" keyProperty="b_yno">
+        insert into booking(u_name,p_id,b_mname,b_wname,b_date,b_phone,b_yduty,eno)
+        values (#{uName},#{pId},#{bMname},#{bWname},#{bDate},#{bPhone},#{bYduty},#{eno})
+    </insert>
+
+    <!-- 客户 联系成功-->
+    <update id="update" parameterType="Booking">
+        update booking set
+        b_yduty = #{bYduty},
+        eno = #{eno}
+        where b_yno = #{bYno}
+    </update>
+
+    <!-- 修改已处理订单-->
+    <update id="updateOver" parameterType="Booking">
+        update booking set
+        <if test="bMname != null"> b_mname = #{bMname},</if>
+        <if test="bWname != null"> b_wname = #{bWname},</if>
+        <if test="bDate != null">  b_date = #{bDate},</if>
+        <if test="pId != null">    p_id = #{pId}</if>
+        where b_yno = #{bYno}
+    </update>
+
+    <!--使用连接查询，查询出外键表的信息
+    ,p.p_pssl,p.p_dp,p.p_fwry,p.p_fwsj,
+        p.p_zxts,p.p_hzyp,p.p_psdj,p.p_xc,p.p_xk,p.p_bt,p.p_zj,p.p_zssp-->
+    <select id="select" parameterType="Integer" resultMap="booking">
+        select b.b_yno,b.u_name,b.b_mname,b.b_wname,b.b_date,b.b_phone,b.b_yduty,b.eno,
+        e.e_name,u.u_address,
+        p.p_id,p.p_name,p.p_price,p.p_nj,p.p_wj
+        from booking b
+        left join employee e on b.eno = e.eno
+        left join user u on b.u_name = u.u_name
+        left join product p on b.p_id = p.p_id
+        where b.b_yno = #{bYno}
+    </select>
+
+    <!--查询未联系   -->
+    <select id="selectAll" resultMap="booking">
+        select b_yno,u_name,p_id,b_mname,b_wname,b_yduty from booking where b_yduty="未联系"
+    </select>
+
+    <!--查询已联系   -->
+    <select id="selectAllByOver" resultMap="booking">
+        select b_yno,u_name,p_id,b_mname,b_wname,b_yduty from booking where b_yduty="已联系"
+    </select>
+
+    <!--用户订单   -->
+    <select id="selectAllByUser" resultMap="booking">
+        select * from booking where u_name = #{uName}
+    </select>
+
+    <delete id="delete" parameterType="Integer">
+        delete from booking where b_yno = #{bYno}
+    </delete>
+</mapper>
